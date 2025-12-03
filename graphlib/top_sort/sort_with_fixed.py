@@ -1,11 +1,12 @@
 # Note: fixed could possibly be merged with blacklist; only difficulty is blacklist is edge-wise and fixed is node-wise
+# Note: I should probably find a better word than "fixed", I was thinking "sources", but I already use that to mean AND nodes with no prereqs
 
 
 import copy
-import graph_utils
+import graphlib.graph_utils as graph_utils
 
 
-def top_sort(graph, blacklist=None, fixed=None):
+def sort(graph, blacklist=None, fixed=None):
     if blacklist is None:
         blacklist = {}
     else:

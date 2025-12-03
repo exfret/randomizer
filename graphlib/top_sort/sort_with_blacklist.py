@@ -1,7 +1,7 @@
-import graph_utils
+import graphlib.graph_utils as graph_utils
 
 
-def top_sort(graph, blacklist=None):
+def sort(graph, blacklist=None):
     if blacklist is None:
         blacklist = {}
 
@@ -46,14 +46,14 @@ def top_sort(graph, blacklist=None):
             num_satisfiers[dependent_key] += 1
 
 
-            if dependent["op"] == "and":
+            if dependent_node["op"] == "and":
                 if len(dependent_node["prereqs"]) == num_satisfiers[dependent_key]:
                     reachable[dependent_key] = True
 
                     # If this is not a blacklisted AND node, propagate
                     if not dependent_key in blacklisted_and_nodes:
                         add_node(dependent_node)
-            elif dependent["op"] == "or":
+            elif dependent_node["op"] == "or":
                 reachable[dependent_key] = True
 
                 # If this wasn't already added to open and this edge is not blacklisted, propagate

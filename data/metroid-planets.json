@@ -39327,13 +39327,8 @@
             "op": "or",
             "prereqs": [
                 {
-                    "type": "items",
-                    "name": "Missile Tank",
-                    "conn_type": "manual"
-                },
-                {
-                    "type": "items",
-                    "name": "Big Missile Tank",
+                    "type": "logic_block_and",
+                    "name": "missiles_and",
                     "conn_type": "manual"
                 }
             ],
@@ -39813,7 +39808,13 @@
                     "conn_type": "item_pickup_from_location"
                 }
             ],
-            "dependents": []
+            "dependents": [
+                {
+                    "type": "logic_block_and",
+                    "name": "missiles_and",
+                    "conn_type": "manual"
+                }
+            ]
         },
         "Varia Suit": {
             "type": "items",
@@ -39911,8 +39912,8 @@
             ],
             "dependents": [
                 {
-                    "type": "items",
-                    "name": "Missiles",
+                    "type": "logic_block_or",
+                    "name": "missiles_satisfied_or",
                     "conn_type": "manual"
                 }
             ]
@@ -39935,8 +39936,8 @@
             ],
             "dependents": [
                 {
-                    "type": "items",
-                    "name": "Missiles",
+                    "type": "logic_block_or",
+                    "name": "missiles_satisfied_or",
                     "conn_type": "manual"
                 }
             ]
@@ -62630,6 +62631,30 @@
                     "conn_type": "manual"
                 }
             ]
+        },
+        "missiles_and": {
+            "type": "logic_block_and",
+            "name": "missiles_and",
+            "op": "and",
+            "prereqs": [
+                {
+                    "type": "logic_block_or",
+                    "name": "missiles_satisfied_or",
+                    "conn_type": "manual"
+                },
+                {
+                    "type": "items",
+                    "name": "Missile Launcher",
+                    "conn_type": "manual"
+                }
+            ],
+            "dependents": [
+                {
+                    "type": "items",
+                    "name": "Missiles",
+                    "conn_type": "manual"
+                }
+            ]
         }
     },
     "logic_block_or": {
@@ -64023,6 +64048,30 @@
                     "type": "logic_block_and",
                     "name": "Tourian - Pipe Hall - Door to Command Center >>> Door to Rinka Tower (Logic)",
                     "conn_type": "logic_subblock"
+                }
+            ]
+        },
+        "missiles_satisfied_or": {
+            "type": "logic_block_or",
+            "name": "missiles_satisfied_or",
+            "op": "or",
+            "prereqs": [
+                {
+                    "type": "items",
+                    "name": "Missile Tank",
+                    "conn_type": "manual"
+                },
+                {
+                    "type": "items",
+                    "name": "Big Missile Tank",
+                    "conn_type": "manual"
+                }
+            ],
+            "dependents": [
+                {
+                    "type": "logic_block_and",
+                    "name": "missiles_and",
+                    "conn_type": "manual"
                 }
             ]
         }
