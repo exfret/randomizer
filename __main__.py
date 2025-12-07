@@ -1,7 +1,11 @@
 import json
+import random
 import graphlib.graph_utils as graph_utils
 import graphlib.top_sort.sort_with_blacklist as top_sort
+import graphlib.top_sort.sort_with_fixed as top_sort_2
 import randomization.prereq_shuffle as shuffle
+
+random.seed(2323)
 
 node_list = None
 with open("data/metroid-planets.json", "r") as file:
@@ -11,6 +15,19 @@ graph = {}
 for node_class in node_list.values():
     for node in node_class.values():
         graph[graph_utils.make_key(node)] = node
+
+fixed = {}
+for node_name, node in graph.items():
+    num_loc_prereqs = 0
+    for prereq in node["prereqs"]:
+            if prereq["type"] == "location" and node["type"] == "items":
+                 num_loc_prereqs += 1
+    if num_loc_prereqs == 1:
+        if node["type"] == "items":
+            fixed[node_name] = False
+# Hotfix: Need to make sure missiles are satisfiable
+fixed[graph_utils.make_key({"type": "items", "name": "Missile Tank"})] = True
+traversal = top_sort_2.traverse_monotonic(graph, fixed=fixed)
 
 edges_to_shuffle = {}
 for node in graph.values():
